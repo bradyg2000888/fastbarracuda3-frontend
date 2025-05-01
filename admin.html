@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel - Fastbarracuda3 Breaks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fefefe;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    textarea {
+      height: 300px;
+    }
+    #adminForm {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel</h1>
+  <input type="password" id="adminCode" placeholder="Enter admin code" />
+  <button onclick="checkCode()">Unlock</button>
+
+  <div id="adminForm">
+    <input type="text" id="breakName" placeholder="Break Name (e.g., Break 57 - Topps Chrome)" />
+    <textarea id="teamPrices" placeholder="Paste 30 team prices here in format: Team - $Price"></textarea>
+    <button onclick="submitBreak()">Submit Break</button>
+  </div>
+
+  <script>
+    function checkCode() {
+      const code = document.getElementById('adminCode').value;
+      if (code === 'Gunnar22#') {
+        document.getElementById('adminForm').style.display = 'block';
+      } else {
+        alert('Incorrect admin code');
+      }
+    }
+
+    async function submitBreak() {
+      const name = document.getElementById('breakName').value;
+      const rawPrices = document.getElementById('teamPrices').value.trim();
+      const lines = rawPrices.split('\n');
+      const teams = lines.map(line => {
+        const [team, price] = line.split(' - $');
+        return { team: team.trim(), price: parseFloat(price) };
+      });
+
+      const res = await fetch('https://fastbarracuda.vercel.app/api/breaks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          teams,
+          discountPerExtra: 5.0
+        })
+      });
+
+      if (res.ok) {
+        alert('Break submitted successfully!');
+        location.reload();
+      } else {
+        alert('Failed to submit break');
+      }
+    }
+  </script>
+</body>
+</html>
