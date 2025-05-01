@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Team Selector</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0faff;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Choose Your Teams ⚾</h1>
+  <ul id="teamList"></ul>
+  <p>Pay using:</p>
+  <p>📱 Venmo: <strong>@yourhandle</strong></p>
+  <p>💸 PayPal: <strong>paypal.me/yourlink</strong></p>
+  <script>
+    const teams = [
+      "🐍 Diamondbacks", "⚾ Braves", "🦌 Brewers", "🧢 Cubs", "🐶 Dodgers",
+      "🐟 Marlins", "🗿 Mets", "🪙 Nationals", "🧡 Giants", "🦅 Phillies",
+      "🐧 Pirates", "🟥 Cardinals", "🐯 Tigers", "🧲 Reds", "🟣 Rockies",
+      "🌪 Astros", "🧼 Guardians", "🦅 Mariners", "🟡 Athletics", "🔵 Royals",
+      "🧢 Yankees", "🐦 Blue Jays", "🟥 Red Sox", "⚡ Rays", "🧢 White Sox",
+      "🦁 Rangers", "🟤 Padres", "🌴 Angels", "🐦 Orioles", "🟩 Twins"
+    ];
+    const list = document.getElementById('teamList');
+    teams.forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
