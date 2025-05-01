@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fastbarracuda3 Breaks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f0;
+      color: #333;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    select, button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      margin: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚾ Fastbarracuda3 Breaks</h1>
+  <p>Select a break below to choose your teams:</p>
+  <select id="breakDropdown"></select>
+  <br/>
+  <button onclick="goToTeams()">Continue</button>
+
+  <script>
+    async function loadBreaks() {
+      const res = await fetch('https://fastbarracuda.vercel.app/api/breaks');
+      const data = await res.json();
+      const dropdown = document.getElementById('breakDropdown');
+      if (data.length === 0) {
+        dropdown.innerHTML = '<option>No active breaks</option>';
+        return;
+      }
+      data.forEach(b => {
+        const option = document.createElement('option');
+        option.value = b.id;
+        option.textContent = `${b.name} (${b.break_type})`;
+        dropdown.appendChild(option);
+      });
+    }
+
+    function goToTeams() {
+      const breakId = document.getElementById('breakDropdown').value;
+      if (breakId) {
+        window.location.href = `teams.html?break=${breakId}`;
+      }
+    }
+
+    loadBreaks();
+  </script>
+</body>
+</html>
